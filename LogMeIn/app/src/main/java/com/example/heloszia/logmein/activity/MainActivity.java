@@ -3,14 +3,23 @@ package com.example.heloszia.logmein.activity;
 import com.example.heloszia.logmein.R;
 import com.example.heloszia.logmein.helper.SQLiteHandler;
 import com.example.heloszia.logmein.helper.SessionManager;
+
+import java.io.InputStream;
 import java.util.HashMap;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -32,6 +41,8 @@ public class MainActivity extends Activity {
         txtEmail = (TextView) findViewById(R.id.email);
         btnLogout = (Button) findViewById(R.id.btnLogout);
 
+
+
         // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
 
@@ -47,10 +58,10 @@ public class MainActivity extends Activity {
 
         String name = user.get("name");
         String email = user.get("email");
-        lvl = Integer.parseInt(user.get("user_lvl"));
+
 
         // Displaying the user details on the screen
-        txtName.setText(name + " " + lvl);
+        txtName.setText(name);
         txtEmail.setText(email);
 
         // Logout button click event
@@ -61,6 +72,12 @@ public class MainActivity extends Activity {
                 logoutUser();
             }
         });
+
+        lvl = Integer.parseInt(user.get("user_lvl"));
+        button imagebutton= new button("RtBbinpK5XI", (ImageButton) findViewById(R.id.video_1),lvl,0);
+        button imagebutton2= new button("bX9CvhbfQgg", (ImageButton) findViewById(R.id.video_2),lvl,1);
+        button imagebutton3= new button("2Y6Nne8RvaA", (ImageButton) findViewById(R.id.video_3),lvl,1);
+        button imagebutton4= new button("a59gmGkq_pw", (ImageButton) findViewById(R.id.video_4),lvl,1);
     }
 
     /**
@@ -77,4 +94,65 @@ public class MainActivity extends Activity {
         startActivity(intent);
         finish();
     }
+
+    private class button{
+        private String video;
+        private ImageButton imgbtn;
+        private int userlvl, reqlvl;
+
+        public button(String ivideo, ImageButton iimagebtn, int ulvl, int rlvl){
+            video=ivideo;
+            imgbtn=iimagebtn;
+            userlvl=lvl;
+            reqlvl=rlvl;
+            new DownloadImageTask(imgbtn).execute("http://img.youtube.com/vi/" + video + "/hqdefault.jpg");
+            addListenerOnButton();
+        }
+
+        public void addListenerOnButton() {
+
+            imgbtn.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View arg0) {
+                    if(userlvl >= reqlvl) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube://" + video));
+                        startActivity(intent);
+                    }else {
+                        Toast.makeText(getApplicationContext(),
+                                "Fizess elő, hogy megnézhesd a videót!!", Toast.LENGTH_LONG)
+                                .show();
+                    }
+                }
+            });
+
+        }
+
+        private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+            ImageButton bmImage;
+
+            public DownloadImageTask(ImageButton bmImage) {
+                this.bmImage = bmImage;
+            }
+
+            protected Bitmap doInBackground(String... urls) {
+                String urldisplay = urls[0];
+                Bitmap mIcon11 = null;
+                try {
+                    InputStream in = new java.net.URL(urldisplay).openStream();
+                    mIcon11 = BitmapFactory.decodeStream(in);
+                } catch (Exception e) {
+                    Log.e("Error", e.getMessage());
+                    e.printStackTrace();
+                }
+                return mIcon11;
+            }
+
+            protected void onPostExecute(Bitmap result) {
+                bmImage.setImageBitmap(result);
+            }
+        }
+    }
+
+
 }
