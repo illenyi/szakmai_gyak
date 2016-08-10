@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,8 +17,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,10 +77,13 @@ public class MainActivity extends Activity {
         });
 
         lvl = Integer.parseInt(user.get("user_lvl"));
-        button imagebutton= new button("RtBbinpK5XI", (ImageButton) findViewById(R.id.video_1),lvl,0);
+        button ib=new button("RtBbinpK5XI",(LinearLayout) findViewById(R.id.linearLayout),getApplicationContext(),lvl,0);
+        button ib2=new button("bX9CvhbfQgg",(LinearLayout) findViewById(R.id.linearLayout),getApplicationContext(),lvl,1);
+        /*button imagebutton= new button("RtBbinpK5XI", (ImageButton) findViewById(R.id.video_1),lvl,0);
         button imagebutton2= new button("bX9CvhbfQgg", (ImageButton) findViewById(R.id.video_2),lvl,1);
         button imagebutton3= new button("2Y6Nne8RvaA", (ImageButton) findViewById(R.id.video_3),lvl,1);
         button imagebutton4= new button("a59gmGkq_pw", (ImageButton) findViewById(R.id.video_4),lvl,1);
+        */
     }
 
     /**
@@ -97,9 +103,9 @@ public class MainActivity extends Activity {
 
     private class button{
         private String video;
-        private ImageButton imgbtn;
+        private ImageButton ib;
         private int userlvl, reqlvl;
-
+/*
         public button(String ivideo, ImageButton iimagebtn, int ulvl, int rlvl){
             video=ivideo;
             imgbtn=iimagebtn;
@@ -107,11 +113,26 @@ public class MainActivity extends Activity {
             reqlvl=rlvl;
             new DownloadImageTask(imgbtn).execute("http://img.youtube.com/vi/" + video + "/hqdefault.jpg");
             addListenerOnButton();
+        }*/
+
+        public button(String ivideo, LinearLayout layout,Context context, int ulvl, int rlvl){
+            video=ivideo;
+            ib=new ImageButton(context);
+            ib.setLayoutParams(new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT));
+            userlvl=lvl;
+            reqlvl=rlvl;
+            new DownloadImageTask(ib).execute("http://img.youtube.com/vi/" + video + "/hqdefault.jpg");
+            addListenerOnButton();
+
+            layout.addView(ib);
+
         }
 
         public void addListenerOnButton() {
 
-            imgbtn.setOnClickListener(new View.OnClickListener() {
+            ib.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View arg0) {
