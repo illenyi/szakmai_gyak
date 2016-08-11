@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/bg_register"
+    android:background="@color/background_material_dark"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp" >
@@ -61,7 +61,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
-            android:background="#ea4c88"
+            android:background="@android:color/holo_red_dark"
             android:text="@string/btn_register"
             android:textColor="@color/white" />
 
