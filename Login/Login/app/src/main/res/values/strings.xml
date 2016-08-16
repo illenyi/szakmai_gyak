@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Login</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_name">Full name</string>
+    <string name="btn_login">Log in</string>
+    <string name="btn_register">Register</string>
+    <string name="btn_link_to_register">Not a member? Sign up now!</string>
+    <string name="btn_link_to_login">Already registered. Log me in!</string>
+    <string name="welcome">Welcome</string>
+    <string name="btn_logout">Log out</string>
+    <string name="name">Full name</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+</resources>
